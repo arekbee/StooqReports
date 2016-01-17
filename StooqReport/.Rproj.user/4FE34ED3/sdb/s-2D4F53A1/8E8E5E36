@@ -1,0 +1,17 @@
+{
+    "contents" : "\ngetStooqData <- function(asset_code,static_cookie=TRUE) {\n  \n  data_tmp <- tempfile() # \"data.csv\"\n  cookie_tmp <- \"cookie.txt\"\n  \n  u1 <- paste(\"http://stooq.com/q/d/?s=\",asset_code,sep=\"\")\n  u2 <- paste(\"http://stooq.com/q/d/l/?s=\",asset_code,\"&i=d\",sep=\"\")\n  \n  if (!static_cookie) { \n    \n    \n    \n    h <- c(paste(\"GET \",u1,\" HTTP/1.0\",sep=\"\"),\n           Accept=\"image/gif\",Accept=\"image/x-xbitmap\",Accept=\"image/jpeg\",Accept=\"mage/pjpeg\",Accept=\"application/x-shockwave-flash\",Accept=\"application/vnd.ms-excel\",Accept=\"application/msword\",Accept=\"*/*\",\n           'Accept-Language'=\"pl, en-us;q=0.7\",'User-Agent'=\"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)\",'Proxy-Connection'=\"Keep-Alive\")\n    \n    \n    u1Opts <- curlOptions(header=TRUE,httpheader=h,cookiejar=cookie_tmp)\n    curlPerform(url=u1,.opts=u1Opts,verbose=TRUE)\n    \n    h <- c(paste(\"GET\",u2,\"HTTP/1.0\"),\n           Accept=\"image/gif\",Accept=\"image/x-xbitmap\",Accept=\"image/jpeg\",Accept=\"mage/pjpeg\",Accept=\"application/x-shockwave-flash\",Accept=\"application/vnd.ms-excel\",Accept=\"application/msword\",Accept=\"*/*\",\n           'Accept-Language'=\"pl, en-us;q=0.7\",'User-Agent'=\"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)\",'Proxy-Connection'=\"Keep-Alive\")   \n    \n    u2Opts <- curlOptions(header=TRUE,httpheader=h,cookiefile=cookie_tmp)\n    \n  }\n  \n  else {\n    \n    \n    h <- c(paste(\"GET\",u2,\"HTTP/1.0\"),\n           Accept=\"image/gif\",Accept=\"image/x-xbitmap\",Accept=\"image/jpeg\",Accept=\"mage/pjpeg\",Accept=\"application/x-shockwave-flash\",Accept=\"application/vnd.ms-excel\",Accept=\"application/msword\",Accept=\"*/*\",\n           'Accept-Language'=\"pl, en-us;q=0.7\",'User-Agent'=\"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)\",'Proxy-Connection'=\"Keep-Alive\",Cookie=paste(\"cookie_uu=p;cookie_user=%3F0001dllg000011500d1300%7C\",asset_code,sep=\"\"))   \n    \n    u2Opts <- curlOptions(header=TRUE,httpheader=h)\n    \n  } \n  \n  \n  reader <- basicTextGatherer() \n  \n  w <- getURLContent(url=u2,.opts=u2Opts)\n  \n  \n  write(w,file=data_tmp)\n  \n  stooq_data <- read.csv(data_tmp)\n  \n  stooq_data\n}\n\n\n\n\ngetStooqData.xts<- function(asset_code) {\n  asset <- getStooqData(asset_code)\n  asset.xts <- xts(asset[,-1], order.by = as.Date(asset[,1]))\n  return(asset.xts)\n}\n\n",
+    "created" : 1452984519719.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "917407722",
+    "id" : "8E8E5E36",
+    "lastKnownWriteTime" : 1452984640,
+    "path" : "~/Code/git/StooqReport/StooqReport/Functions.R",
+    "project_path" : "Functions.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

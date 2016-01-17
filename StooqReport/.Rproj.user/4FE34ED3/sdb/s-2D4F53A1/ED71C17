@@ -1,0 +1,17 @@
+{
+    "contents" : "library(RCurl)\n\n\nsource('Functions.R')\n\nstooqdata <- getStooqData(\"Wig20\")\n\nstooqdata$Date <-  as.Date(stooqdata$Date)\n\nstooqdata <- stooqdata[stooqdata$Date > as.Date('2015-01-01'),]\n\nstooqdata.Date.min <- min(stooqdata$Date)\nstooqdata$Date.from.first <- stooqdata$Date - stooqdata.Date.min \n\nstooqdata$DayChange <-  stooqdata$Close -  stooqdata$Open \nstooqdata$DayChange.p <-  (stooqdata$Close -  stooqdata$Open) /  stooqdata$Open \nstooqdata$Range <-  stooqdata$High -  stooqdata$Low\nstooqdata$Range.p <-  (stooqdata$High -  stooqdata$Low ) / stooqdata$Low \n\nstooqdata$Range.to.DayChange <-  stooqdata$Range / stooqdata$DayChange\n\n\nstooqdata$Date.weekdays <- factor(weekdays(stooqdata$Date),  levels = c(\"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\"))\nstooqdata$Date.months <- factor(months(stooqdata$Date), , levels = c(\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \"August\", \"September\", \"October\", \"November\", \"December\"))\nquarters\n\n\nstooqdata[stooqdata$Date.months >= \"October\",]\n\n\nclass(stooqdata$Date.as.Date)\n\n\n\n\nwibor <- getStooqData.xts(\"PLOPLN3M\")\n\n\n\nxauusd <- getStooqData.xts(\"xauusd\")\nxuapln <- getStooqData.xts(\"xaupln\")\n\n\n\n\n",
+    "created" : 1452984549496.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4144941935",
+    "id" : "ED71C17",
+    "lastKnownWriteTime" : 1452986750,
+    "path" : "~/Code/git/StooqReport/StooqReport/Load.R",
+    "project_path" : "Load.R",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "type" : "r_source"
+}
